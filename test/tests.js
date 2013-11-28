@@ -29,6 +29,16 @@ exports.Allows = function () {
         done()
       })
     })
+
+    it('guest to view /api/v1/comments', function (done) {
+        var acl = new Acl(this.backend);
+        acl.ignorePrefix('/api/v1');
+
+        acl.allow('guest', '/api/v1/comments', 'view', function (err) {
+            assert(!err);
+            done();
+        })
+    })
   })
 
   describe('Add user roles', function () {
@@ -233,6 +243,16 @@ exports.Allowance = function () {
           assert(!err)
           assert(!allow)
           done()
+        })
+      })
+
+      it('Can joed view /comments?', function (done) {
+        var acl = new Acl(this.backend);
+
+        acl.isAllowed('joed', '/comments', 'view', function (err, allow) {
+            assert(!err);
+            assert(allow);
+            done();
         })
       })
 
